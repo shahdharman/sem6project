@@ -4,7 +4,7 @@
     <h3>Add product page</h3>
 <table>
     <tr>
-        <td>Product Name:</td>
+        <td>Product :</td>
         <td><asp:TextBox ID="pname" placeholder="Enter Product Name" runat="server"></asp:TextBox></td>
     </tr>
     
