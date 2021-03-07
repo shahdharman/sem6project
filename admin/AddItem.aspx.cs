@@ -33,65 +33,54 @@ namespace eBuyAntiquesStore2.admin
     }
     public partial class AddItem : System.Web.UI.Page
     {
-        SqlConnection sqlcon = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\jk\source\repos\eBuyAntiquesStore2\App_Data\ebuyantiques_db.mdf;Integrated Security=True");
-        string a, b;
-        int catID;
+         string a, b;
+        string catID="";
+        SqlConnection sqlcon = new SqlConnection(@"Data Source=JK-PC;Initial Catalog=ebuyAntiquesStore;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework");
 
         protected void Page_Load(object sender, EventArgs e)
         {
-          
-                catID = 0;
+            if (!Page.IsPostBack)
+            {
 
+                sqlcon.Open();
+                SqlCommand com = new SqlCommand("select *from CategoryMaster", sqlcon);
+                SqlDataAdapter da = new SqlDataAdapter(com);
+                DataSet ds = new DataSet();
+                da.Fill(ds);  // fill dataset  
+                pdropdown.DataTextField = ds.Tables[0].Columns["categoryName"].ToString(); // text field name of table dispalyed in dropdown       
+                pdropdown.DataValueField = ds.Tables[0].Columns["categoryId"].ToString();
+                // to retrive specific  textfield name   
+                pdropdown.DataSource = ds.Tables[0];      //assigning datasource to the dropdownlist  
+                pdropdown.DataBind();  //binding dropdownlist 
 
-            string com = "select * from CategoryMaster"; 
-            sqlcon.Open();
-            // table name  
-            SqlDataAdapter adpt = new SqlDataAdapter(com,sqlcon);
-            DataTable dt = new DataTable();
-            adpt.Fill(dt);
-            pdropdown.DataSource = dt;
-            pdropdown.DataTextField = "categoryName";// text field name of table dispalyed in dropdown       
-                pdropdown.DataValueField = "categoryId";
-            pdropdown.DataBind();
-                //get selected  value
-            sqlcon.Close();
-        }
-
-        
-         public void GetCategoryId(String catname)
-        {
-            SqlCommand sqlcom = new SqlCommand("select categoryId from CategoryMaster where categoryName='" + catname + "'",sqlcon);
-            sqlcom.ExecuteNonQuery();
-            DataTable dt = new DataTable();
-            SqlDataAdapter da = new SqlDataAdapter(sqlcom);
-            da.Fill(dt);
-            catID = Convert.ToInt32(dt.Rows[0]["categoryId"]);
-
+            }
         }
         
-        public void InsertItemStock() { 
-        }
+        
+        
+       
         protected void Sbtbtn_Click(object sender, EventArgs e)
         {
             try
             {
                 sqlcon.Open();
-                GetCategoryId(pdropdown.SelectedItem.ToString());
+                catID = pdropdown.SelectedItem.Value;
+                
                 a = Class1.GetRandomPassword(10).ToString();
                 pimg.SaveAs(Request.PhysicalApplicationPath + "./Images/" + a + pimg.FileName.ToString());
                 b = "Images/" + a + pimg.FileName.ToString();
 
                 SqlCommand cmd = sqlcon.CreateCommand();
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "insert into ItemMaster(itemName,categoryId,itemDescription,itemWeight,itemAge,itemImage,addedDate) values('" + pname.Text + "'," + catID.ToString() + ",'" + pdesc.Text + "'," + pweight.Text + "," + page.Text + ",'" + b.ToString() + "','" + DateTime.Now.ToString("M/d/yyyy") + "')";
+                cmd.CommandText = "insert into ItemMaster(itemName,categoryId,itemDescription,itemWeight,itemAge,itemImage,addedDate,quantity,itemPrice) values('" + pname.Text + "'," + catID.ToString() + ",'" + pdesc.Text + "'," + pweight.Text + "," + page.Text + ",'" + b.ToString() + "','" + DateTime.Now.ToString("M/d/yyyy") + "'," + pprice.Text + "," + pquan.Text + ")";
                
-               int i= cmd.ExecuteNonQuery(); sqlcon.Close();
+               int i= cmd.ExecuteNonQuery();
                 if (i > 0)
                 {
-                    l2.Text = "cat:"+catID.ToString();
+                    l2.Text = "cat:"+ catID;
                     l3.Text = "name   :" + pdropdown.SelectedItem.Text;
                     l4.Text = "date:" + DateTime.Now.ToString("M/d/yyyy");
-                    l4.Text = "dt:" + pdropdown.SelectedValue.ToString();
+                   
                     
 
 
@@ -99,8 +88,7 @@ namespace eBuyAntiquesStore2.admin
                 else {
                     Response.Write("<script>alert('Error')</script>");
                 }
-                int id = GetItemId(pname.Text.ToString());
-                InsertPrice(id, float.Parse(pprice.Text.ToString()));
+               
                 
                 
             }
@@ -110,42 +98,6 @@ namespace eBuyAntiquesStore2.admin
                 sqlcon.Close();
             }
         }
-        public void InsertPrice(int id,float oprice) {
-
-            try
-            {
-                sqlcon.Open();
-                SqlCommand cmd = new SqlCommand("insert into ItemPricingMaster(itemId,originalPrice,discountedPrice) values(" + id+","+oprice+ "," + oprice + ")", sqlcon);
-                cmd.ExecuteNonQuery();
-                sqlcon.Close();
-            }
-           
-            finally
-            {
-                sqlcon.Close();
-            }
-        }
-        public int  GetItemId(String iname)
-        {
-            int id = 0;
-            try
-            {
-
-
-                SqlDataAdapter da =new SqlDataAdapter("select itemId from ItemMaster where itemName='" + iname + "'", sqlcon);
-                DataTable dt = new DataTable();
-               da.Fill(dt);
-                id = Convert.ToInt32(dt.Rows[0][0].ToString());
-
-                sqlcon.Close(); return id;
-            }
-           
-            finally
-            {
-                sqlcon.Close();
-            }
-
-           
-        }
+        
     }
 }

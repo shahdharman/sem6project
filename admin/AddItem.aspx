@@ -10,7 +10,8 @@
     
     <tr>
         <td>Category:</td>
-        <td><asp:DropDownList ID="pdropdown" runat="server" Width="150px" >  
+        <td><asp:DropDownList ID="pdropdown" 
+            runat="server" Width="150px" >  
         </asp:DropDownList>  
         </td>
     </tr>
@@ -34,6 +35,10 @@
      <tr>
         <td >Product Description:</td>
         <td><asp:TextBox ID="pdesc" placeholder="Enter Product Description" runat="server" TextMode="MultiLine" Rows="5" Columns="20" ></asp:TextBox></td>
+    </tr>
+         <tr>
+        <td >Product quantity:</td>
+        <td><asp:TextBox ID="pquan" placeholder="Enter Product quantity" runat="server" ></asp:TextBox></td>
     </tr>
         <br>
      <tr>

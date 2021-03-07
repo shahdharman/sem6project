@@ -99,22 +99,13 @@
     <Content Include="admin\AddItem.aspx" />
     <Content Include="admin\AdminDashboard.aspx" />
     <Content Include="admin\AdminLogin.aspx" />
+    <Content Include="admin\ProductCRUD.aspx" />
     <Content Include="App_Data\ebuyantiques_db.mdf" />
     <Content Include="App_Data\ebuyantiques_db_log.ldf">
       <DependentUpon>ebuyantiques_db.mdf</DependentUpon>
     </Content>
     <Content Include="Global.asax" />
     <Content Include="Images\img_avatar.jpg" />
-    <Content Include="DAL\Model1.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="DAL\Model1.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
-    </Content>
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -145,67 +136,21 @@
     <Compile Include="admin\AdminDashboard.aspx.designer.cs">
       <DependentUpon>AdminDashboard.aspx</DependentUpon>
     </Compile>
-    <Compile Include="admin\Controllers\AdminController.cs" />
+    <Compile Include="admin\ProductCRUD.aspx.cs">
+      <DependentUpon>ProductCRUD.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\ProductCRUD.aspx.designer.cs">
+      <DependentUpon>ProductCRUD.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="DAL\CategoryMaster.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\ItemDiscount.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\ItemMaster.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\Model1.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\Model1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\Model1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\Order.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\OrderDetail.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\OrderPayment.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\UserMaster.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Repository\GenericRepository.cs" />
-    <Compile Include="Repository\GenericUnitOfWork.cs" />
-    <Compile Include="Repository\IRepository.cs" />
-    <Compile Include="Models\Category.cs" />
-    <Compile Include="Models\Item.cs" />
-    <Compile Include="Models\Order.cs" />
-    <Compile Include="Models\OrderDetail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="admin\AdminMasterPage.Master" />
-    <EntityDeploy Include="DAL\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="DAL\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
-    <Content Include="Views\Share\_AdminDashBoardLayout.cshtml" />
     <None Include="packages.config" />
-    <Content Include="Views\Admin\DashBoard.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -216,6 +161,8 @@
   <ItemGroup>
     <Folder Include="App_Code\" />
     <Folder Include="user\" />
+    <Folder Include="Views\Admin\" />
+    <Folder Include="Views\Share\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
